@@ -30,7 +30,7 @@ class BasicBlock(nn.Module):
         out = self.conv2(out)
         out = self.bn2(out)
         out = self.relu2(out)
-
+ 
         out += residual
         return out
 
@@ -43,6 +43,7 @@ class DarkNet(nn.Module):
         self.bn1    = nn.BatchNorm2d(self.inplanes)
         self.relu1  = nn.LeakyReLU(0.1)
 
+        # 残差模块
         # 416,416,32 -> 208,208,64
         self.layer1 = self._make_layer([32, 64], layers[0])
         # 208,208,64 -> 104,104,128
@@ -96,4 +97,5 @@ class DarkNet(nn.Module):
 
 def darknet53():
     model = DarkNet([1, 2, 8, 8, 4])
+    # 列表对应残差块使用的次数
     return model
